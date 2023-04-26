@@ -114,7 +114,7 @@ class ProductListView extends StatelessWidget {
                                 topLeft: Radius.circular(10),
                                 topRight: Radius.circular(10)),
                             child: FadeInImage.assetNetwork(
-                              image: currentProduct.featuredImage,
+                              image: currentProduct.thumbnail,
                               placeholder: "assets/product-placeholder.png",
                               imageErrorBuilder: (context, error, stackTrace) =>
                                   Image.asset("assets/product-placeholder.png"),
@@ -193,8 +193,8 @@ class AddToCartButton extends StatelessWidget {
                 context.read<CartBloc>().add(CartItemAdded(CartItemTblData(
                       id: productItem.id,
                       title: productItem.title,
-                      createdAt: productItem.createdAt,
-                      featuredImage: productItem.featuredImage,
+                      createdAt: DateTime.now(),
+                      featuredImage: productItem.thumbnail,
                       price: productItem.price.toDouble(),
                       description: productItem.description,
                     )));

@@ -92,7 +92,7 @@ class CartView extends StatelessWidget {
                                 children: [
                                   const Text("Price",
                                       style: TextStyle(fontSize: 12)),
-                                  Text("₹${currentProduct.price}",
+                                  Text("\$${currentProduct.price}",
                                       style: const TextStyle(fontSize: 12)),
                                 ],
                               ),

@@ -24,20 +24,17 @@ class ProductsListBloc extends Bloc<ProductsListEvent, ProductsListState> {
 
     // * API: Get products
     final apiHelper = ApiHelper(
-        serviceName: "",
-        endPoint: ApiPaths.productsList,
-        useOnlyThisHeader: {
-          "token":
-              "eyJhdWQiOiI1IiwianRpIjoiMDg4MmFiYjlmNGU1MjIyY2MyNjc4Y2FiYTQwOGY2MjU4Yzk5YTllN2ZkYzI0NWQ4NDMxMTQ4ZWMz"
-        });
-    final result = await apiHelper.post(body: {"page": 1, "perPage": 5});
+      serviceName: "Get Products",
+      endPoint: ApiPaths.products,
+    );
+    final result = await apiHelper.get();
     result.fold((l) {
       Log.error(l.pprint());
       emit(ProductsListError());
     }, (r) {
       try {
         final productsData = ProductsListModel.fromJson(r);
-        emit(ProductsListLoaded(productsData.data));
+        emit(ProductsListLoaded(productsData.products));
       } catch (error, _) {
         Log.error(error);
         emit(ProductsListError());
