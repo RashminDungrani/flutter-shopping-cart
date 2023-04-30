@@ -9,10 +9,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 <div style="display:flex; justify-content:center">
     <div style="margin-right:10px; border:2px solid black; padding:2px;">
-        <img src="screenshots/cart-page.png" width="400" />
+        <img src="screenshots/cart_page.jpg" width="400" />
     </div>
     <div style="margin-right:10px; border:2px solid black; padding:2px;">
-        <img src="screenshots/shopping-mall-page.png" width="400" />
+        <img src="screenshots/shopping_mall_page.jpg" width="400" />
     </div>
 </div>
 <br>
