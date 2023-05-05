@@ -9,10 +9,10 @@ These instructions will get you a copy of the project up and running on your loc
 
 <div style="display:flex; justify-content:center">
     <div style="margin-right:10px; border:2px solid black; padding:2px;">
-        <img src="https://user-images.githubusercontent.com/48521608/236441103-4dbd0e7d-dc2e-406c-a3b3-048b654b409d.jpg" width="400" />
+        <img src="https://user-images.githubusercontent.com/48521608/236441088-942452bb-f61f-4e98-9742-2e6ebbdf9fc9.jpg" width="400" />
     </div>
     <div style="margin-right:10px; border:2px solid black; padding:2px;">
-        <img src="https://user-images.githubusercontent.com/48521608/236441088-942452bb-f61f-4e98-9742-2e6ebbdf9fc9.jpg" width="400" />
+        <img src="https://user-images.githubusercontent.com/48521608/236441103-4dbd0e7d-dc2e-406c-a3b3-048b654b409d.jpg" width="400" />
     </div>
 </div>
 <br>
