@@ -2,8 +2,9 @@ import 'dart:async';
 
 import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
+import 'package:get_it/get_it.dart';
+import 'package:shopping_cart/injection_container.dart';
 
-import '../../../../main.dart';
 import '../../../db/drift/DAOs/cart_item_dao.dart';
 import '../../../db/drift/database.dart';
 
@@ -21,7 +22,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     emit(CartLoading());
 
     final List<CartItemTblData> cartItemsInDB =
-        await CartItemDao(db).selectAllCartItems;
+        await CartItemDao(sl.get<AppDatabase>()).selectAllCartItems;
 
     emit(CartLoaded(cartItemsInDB));
   }
@@ -31,7 +32,7 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     Emitter<CartState> emit,
   ) async {
     final state = this.state;
-    await CartItemDao(db).insertCartItem(event.item);
+    await CartItemDao(GetIt.I.get<AppDatabase>()).insertCartItem(event.item);
     if (state is CartLoaded) {
       try {
         emit(CartLoaded([
@@ -56,7 +57,8 @@ class CartBloc extends Bloc<CartEvent, CartState> {
     Emitter<CartState> emit,
   ) async {
     final state = this.state;
-    await CartItemDao(db).deleteOneProductItem(productId: event.item.id);
+    await CartItemDao(sl.get<AppDatabase>())
+        .deleteOneProductItem(productId: event.item.id);
     if (state is CartLoaded) {
       try {
         emit(CartLoaded([...state.cartProducts]..remove(event.item)));

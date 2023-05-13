@@ -1,5 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 
 import '../../db/drift/database.dart';
 import '../../models/models.dart';
@@ -11,6 +13,15 @@ class ProductListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print(
+    //   ResponsiveValue<double>(context, conditionalValues: [
+    //     const Condition.between(start: 0, end: 550, value: 450),
+    //     const Condition.between(start: 800, end: 100, value: 800),
+    //     // const Condition.between(start: 1000, end: 1200, value: 1000),
+    //     // There are no conditions for width over 1200
+    //     // because the `maxWidth` is set to 1200 via the MaxWidthBox.
+    //   ]).value,
+    // );
     return Scaffold(
       appBar: AppBar(
         toolbarHeight: 45,
@@ -49,7 +60,11 @@ class ProductListView extends StatelessWidget {
                 );
               },
             ),
-            onPressed: () => Navigator.pushNamed(context, "/cart"),
+            onPressed: () {
+              // TODO: modify toast message like app toast at bottom center
+              // showTopFlashMessage(context, ToastType.success, "Great");
+              context.push(Uri(path: "/cart").toString());
+            },
           ),
         ],
       ),
@@ -171,7 +186,9 @@ class AddToCartButton extends StatelessWidget {
           return const SizedBox();
         }
         if (state is CartError) {
-          print('cart error');
+          if (kDebugMode) {
+            print('cart error');
+          }
           return const SizedBox();
         }
         if (state is CartLoaded) {

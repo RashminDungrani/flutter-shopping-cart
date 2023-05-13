@@ -1,27 +1,22 @@
-import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:responsive_framework/responsive_wrapper.dart';
+import 'package:go_router/go_router.dart';
+import 'package:responsive_framework/responsive_framework.dart';
 
-import 'app/db/drift/database.dart';
 import 'app/modules/cart/bloc/cart_bloc.dart';
 import 'app/modules/cart/cart_view.dart';
 import 'app/modules/products_list/bloc/products_list_bloc.dart';
 import 'app/modules/products_list/products_list_view.dart';
+import 'injection_container.dart';
 import 'simple_bloc_observer.dart';
-import 'utils/api/api_helper.dart';
-import 'utils/api/network_info.dart';
-
-late AppDatabase db;
 
 Future<void> main() async {
   Bloc.observer = const SimpleBlocObserver();
-  networkInfo = NetworkInfoImpl(Connectivity());
-
-  db = AppDatabase();
 
   WidgetsFlutterBinding.ensureInitialized();
+
+  await initDI();
 
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
@@ -53,37 +48,52 @@ class MyApp extends StatelessWidget {
           create: (_) => CartBloc()..add(CartStarted()),
         ),
       ],
-      child: MaterialApp(
+      child: MaterialApp.router(
         title: 'Shopping Cart',
         theme: ThemeData(
           primarySwatch: Colors.blue,
+          useMaterial3: true,
         ),
         debugShowCheckedModeBanner: false,
         builder: (context, child) => MediaQuery(
           data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
-          child: ResponsiveWrapper.builder(
-            child,
-            maxWidth: 1440,
-            minWidth: 320,
-            defaultScale: true,
-            breakpointsLandscape: [
-              const ResponsiveBreakpoint.autoScale(550, name: MOBILE),
-              const ResponsiveBreakpoint.autoScale(1000, name: TABLET),
-            ],
+          child: ResponsiveBreakpoints.builder(
             breakpoints: [
-              // const ResponsiveBreakpoint.autoScale(320, name: MOBILE),
-              const ResponsiveBreakpoint.autoScale(450, name: MOBILE),
-              const ResponsiveBreakpoint.autoScale(1150, name: TABLET),
-              // const ResponsiveBreakpoint.resize(1200, name: DESKTOP),
+              const Breakpoint(start: 0, end: 480, name: MOBILE),
+              const Breakpoint(start: 451, end: 800, name: TABLET),
+              const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+              // const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
             ],
-            // background: const ColoredBox(color: blackColor)),
+            // child: child!,
+            child: MaxWidthBox(
+              maxWidth: 922,
+              background: Container(color: Colors.white),
+              child: Builder(builder: (context) {
+                return ResponsiveScaledBox(
+                  width: ResponsiveValue<double>(context, conditionalValues: [
+                    const Condition.equals(name: MOBILE, value: 800),
+                    const Condition.between(start: 0, end: 800),
+                    const Condition.equals(name: TABLET, value: 1200),
+                    const Condition.between(start: 481, end: 922),
+                    // There are no conditions for width over 922
+                    // because the `maxWidth` is set to 922 via the MaxWidthBox.
+                  ]).value,
+                  child: child!,
+                );
+              }),
+            ),
           ),
         ),
-        initialRoute: "/",
-        routes: {
-          "/": (_) => const ProductListView(),
-          "/cart": (_) => const CartView(),
-        },
+        routerConfig: GoRouter(routes: [
+          GoRoute(
+            path: "/",
+            builder: (context, state) => const ProductListView(),
+          ),
+          GoRoute(
+            path: "/cart",
+            builder: (context, state) => const CartView(),
+          ),
+        ]),
       ),
     );
   }

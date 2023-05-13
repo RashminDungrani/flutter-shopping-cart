@@ -8,7 +8,7 @@ mixin AppConfig {
   // static late final PackageInfo packageInfo;
 
   // kDebugMode;
-  static bool get isDebugMode => kDebugMode;
+  // static bool get isDebugMode => kDebugMode;
   static bool get setNoValidation => kDebugMode;
 
   // static const String twilioCountryCode = "1";

@@ -3,9 +3,9 @@
 import 'dart:io';
 
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
-import '../app/data/app_config.dart';
 import 'packages/loaders/staggered_dots_wave.dart';
 
 class AppLoader extends StatelessWidget {
@@ -52,7 +52,7 @@ class AppLoader extends StatelessWidget {
   }
 
   Widget getLoader(Color loaderColor) {
-    if (AppConfig.isDebugMode) {
+    if (kDebugMode) {
       return Icon(Icons.refresh, color: loaderColor);
     }
 

@@ -35,13 +35,14 @@ Future<void> showTopFlashMessage(
           return Flash(
             controller: controller,
             position: FlashPosition.top,
-            behavior: FlashBehavior.fixed,
-            backgroundColor: toastType.isFailure
-                ? Colors.red.shade300
-                : toastType.isSuccess
-                    ? Colors.green.shade300
-                    : Colors.white,
+            // behavior: FlashBehavior.fixed,
+            // backgroundColor: toastType.isFailure
+            //     ? Colors.red.shade300
+            //     : toastType.isSuccess
+            //         ? Colors.green.shade300
+            //         : Colors.white,
             child: FlashBar(
+              controller: controller,
               icon: Icon(
                 toastType.isFailure
                     ? Icons.close_sharp

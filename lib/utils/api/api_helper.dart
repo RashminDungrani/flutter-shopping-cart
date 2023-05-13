@@ -7,6 +7,7 @@ import 'dart:io';
 import 'package:dartz/dartz.dart';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart';
+import 'package:shopping_cart/injection_container.dart';
 
 import '../../app/data/api_paths.dart';
 
@@ -42,7 +43,7 @@ extension HttpMethodExtension on HttpMethod {
   }
 }
 
-late final NetworkInfo networkInfo;
+// late final NetworkInfo networkInfo;
 
 class ApiHelper {
   final String serviceName;
@@ -151,7 +152,7 @@ class ApiHelper {
     // } else if (showOverlay && context.mounted) {
     //   LoadingOverlay.of(context).show();
     // }
-    if (checkInternet && !await networkInfo.checkIsConnected) {
+    if (checkInternet && !(await sl.get<NetworkInfo>().checkIsConnected)) {
       // if (showOverlay || showTransparentOverlay) {
       //   LoadingOverlay.of(context).hide();
       // }
@@ -252,9 +253,10 @@ class ApiHelper {
       }
     } on TimeoutException {
       Log.error('timeout exception thrown');
-      response = Response("Request Timeout",
-          408); // 408 is Request Timeout response status code
+      response = Response("Request Timeout", 408);
+      // 408 is Request Timeout response status code
       // set body message to request timeout in network info class
+      final networkInfo = sl.get<NetworkInfo>();
       networkInfo.isConnected = false;
       networkInfo.requestStatus = EnumRequestStatus.requestTimeout;
     } catch (e) {

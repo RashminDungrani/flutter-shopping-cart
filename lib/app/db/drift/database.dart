@@ -1,9 +1,9 @@
 import 'package:drift/drift.dart';
+import 'package:flutter/foundation.dart';
 
 import 'package:shopping_cart/app/db/drift/tables.dart';
-import 'package:shopping_cart/main.dart';
+import 'package:shopping_cart/injection_container.dart';
 
-import '../../data/app_config.dart';
 import 'DAOs/cart_item_dao.dart';
 
 import 'connection/connection.dart';
@@ -41,13 +41,13 @@ class AppDatabase extends _$AppDatabase {
   }
 
   Future<void> afterDBCreated() async {
-    if (AppConfig.isDebugMode) {
+    if (kDebugMode) {
       print("Migration: AfterDBCreated methods started");
     }
   }
 
   Future<void> onUpgrade(m, from, to) async {
-    if (AppConfig.isDebugMode) {
+    if (kDebugMode) {
       print("Migration: onUpgrade methods started");
     }
     // if (from == 1) {
@@ -57,10 +57,12 @@ class AppDatabase extends _$AppDatabase {
   }
 
   Future deleteDB() async {
-    final dbFile = db.dbConfig.dbFile;
+    final dbFile = sl.get<AppDatabase>().dbConfig.dbFile;
     await dbFile.delete();
 
-    print('drift db deleted');
+    if (kDebugMode) {
+      print('drift db deleted');
+    }
   }
 
   // Future<bool> requestPermission(Permission permission) async {
