@@ -13,6 +13,7 @@ class ProductListView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    // print(MediaQuery.of(context).size);
     // print(
     //   ResponsiveValue<double>(context, conditionalValues: [
     //     const Condition.between(start: 0, end: 550, value: 450),

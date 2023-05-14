@@ -59,24 +59,22 @@ class MyApp extends StatelessWidget {
           data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
           child: ResponsiveBreakpoints.builder(
             breakpoints: [
-              const Breakpoint(start: 0, end: 480, name: MOBILE),
-              const Breakpoint(start: 451, end: 800, name: TABLET),
-              const Breakpoint(start: 801, end: 1920, name: DESKTOP),
+              const Breakpoint(start: 0, end: 450, name: MOBILE),
+              const Breakpoint(start: 451, end: 1150, name: TABLET),
+              const Breakpoint(start: 1151, end: 1920, name: DESKTOP),
               // const Breakpoint(start: 1921, end: double.infinity, name: '4K'),
             ],
             // child: child!,
             child: MaxWidthBox(
-              maxWidth: 922,
+              maxWidth: 1920,
               background: Container(color: Colors.white),
               child: Builder(builder: (context) {
                 return ResponsiveScaledBox(
                   width: ResponsiveValue<double>(context, conditionalValues: [
-                    const Condition.equals(name: MOBILE, value: 800),
-                    const Condition.between(start: 0, end: 800),
-                    const Condition.equals(name: TABLET, value: 1200),
-                    const Condition.between(start: 481, end: 922),
-                    // There are no conditions for width over 922
-                    // because the `maxWidth` is set to 922 via the MaxWidthBox.
+                    const Condition.equals(name: MOBILE, value: 350),
+                    const Condition.equals(name: TABLET, value: 600),
+                    // const Condition.between(start: 451, end: 1150, value: 600),
+                    const Condition.equals(name: DESKTOP, value: 1200),
                   ]).value,
                   child: child!,
                 );
