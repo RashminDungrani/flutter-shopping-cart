@@ -1,10 +1,11 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http_api_helper/http_api_helper.dart';
 
 import 'package:shopping_cart/app/models/models.dart';
 import 'package:shopping_cart/utils/log_helper.dart';
 
-import '../../../../utils/api/api_helper.dart';
 import '../../../data/api_paths.dart';
 
 part 'products_list_event.dart';
@@ -23,6 +24,8 @@ class ProductsListBloc extends Bloc<ProductsListEvent, ProductsListState> {
 
     // * API: Get products
     final apiHelper = APIHelper(
+      baseUrl: ApiPaths.apiBaseUrl,
+      isReleaseMode: kReleaseMode,
       serviceName: "Get Products",
       endPoint: ApiPaths.products,
     );

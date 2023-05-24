@@ -88,9 +88,15 @@ class ProductListView extends StatelessWidget {
               return const Center(child: CircularProgressIndicator.adaptive());
             }
             if (state is ProductsListError) {
-              return const Center(
-                  child: Text("Something went wrong",
-                      style: TextStyle(fontSize: 14)));
+              return SingleChildScrollView(
+                  child: SizedBox(
+                      height: MediaQuery.of(context).size.height * 0.9,
+                      width: MediaQuery.of(context).size.width,
+                      child: const Center(
+                          child: Text(
+                        "Something went wrong",
+                        style: TextStyle(fontSize: 14),
+                      ))));
             }
             if (state is ProductsListLoaded) {
               return GridView.builder(
@@ -160,7 +166,10 @@ class ProductListView extends StatelessWidget {
               );
             }
             return TextButton(
-                onPressed: () {},
+                onPressed: () {
+                  BlocProvider.of<ProductsListBloc>(context)
+                      .add(ProductsListStarted());
+                },
                 child: const Text(
                   "Retry",
                 ));
